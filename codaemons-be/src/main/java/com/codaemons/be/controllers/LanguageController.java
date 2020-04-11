@@ -1,4 +1,4 @@
-package com.codaemons.controllers;
+package com.codaemons.be.controllers;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.codaemons.dao.LanguageServiceDAO;
-import com.codaemons.models.Lanugages;
+import com.codaemons.be.dao.LanguageServiceDAO;
+import com.codaemons.be.models.Lanugages;
 
 @RestController
 @RequestMapping("/api/v1")

@@ -1,8 +1,8 @@
-package com.codaemons.dao;
+package com.codaemons.be.dao;
 
 import java.util.List;
 
-import com.codaemons.models.Lanugages;
+import com.codaemons.be.models.Lanugages;
 
 public interface LanguageServiceDAO {
 

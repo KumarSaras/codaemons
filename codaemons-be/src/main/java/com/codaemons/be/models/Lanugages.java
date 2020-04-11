@@ -1,4 +1,4 @@
-package com.codaemons.models;
+package com.codaemons.be.models;
 
 import java.sql.Timestamp;
 
