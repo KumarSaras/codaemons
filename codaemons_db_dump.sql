@@ -18,7 +18,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-DROP DATABASE "CodeDaemons";
+DROP DATABASE IF EXISTS "CodeDaemons";
 --
 -- TOC entry 2918 (class 1262 OID 16393)
 -- Name: CodeDaemons; Type: DATABASE; Schema: -; Owner: postgres

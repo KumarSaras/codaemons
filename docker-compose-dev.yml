@@ -1,0 +1,87 @@
+version: '3'
+services:
+
+  ##Judge0 services start##
+  #Currently the image is taken from docker hub. 
+  #If we need to make any changes to Judge0's code base we will need to change this to build image from local system
+  api:
+    image: judge0/api:1.5.0
+    volumes:
+      - ./judge0-conf/judge0-api.conf:/judge0-api.conf:ro
+    #Remove this port after development as this need not be exposed  
+    ports:
+      - "3000:3000"
+    privileged: true
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  worker:
+    image: judge0/api:1.5.0
+    command: ["./scripts/run-workers"]
+    volumes:
+      - ./judge0-conf/judge0-api.conf:/judge0-api.conf:ro
+    privileged: true
+    depends_on:
+      - db
+      - redis
+    restart: always
+
+  db:
+    image: postgres:9.6
+    env_file: ./judge0-conf/judge0-api.conf
+    volumes:
+      - ./srv/postgres-data:/var/lib/postgresql/data/
+    restart: always
+
+  redis:
+    image: redis:4.0
+    command: [
+      "bash", "-c",
+      'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
+    ]
+    env_file: ./judge0-conf/judge0-api.conf
+    volumes:
+      - ./srv/redis-data:/data
+    restart: always
+  ##Judge0 services end##
+
+  cdapibackend:
+    build: './codaemons-be' #codaemons-be codexecutor
+    environment:
+      - DB_URI=postgresql://cddb:5432/CodeDaemons
+      - JUDGE0_API_BASE_URI=http://api:3000
+    ports:
+      - "8081:8080"
+    depends_on:
+      - cddb
+      - db
+      - redis
+    restart: always
+
+  #A new service for web application has to be created after server side rendering is supported
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      ####using dummy index html. To be changed after UI module is pushed
+      - ./index.html:/srv/www/static/index.html #./ui/build:/srv/www/static
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - API_BACKEND_URI=http://cdapibackend
+    depends_on:
+      - cdapibackend
+    restart: always
+
+  cddb:
+    image: postgres:latest
+    volumes:
+      - ./codaemons_db_dump.sql:/docker-entrypoint-initdb.d/codaemons_db_dump.sql
+    environment:
+      - POSTGRES_PASSWORD=system
+    depends_on:
+      - db
+      - redis
