@@ -1,3 +1,5 @@
 #macOS file
 .DS_Store
 srv/
+
+codaemons-ui/node_modules
