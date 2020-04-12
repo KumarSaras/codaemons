@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.codedaemons</groupId>
 	<artifactId>codaemons-be</artifactId>
-	<version>1.0.0</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>codaemons-be</name>
 
 	<properties>

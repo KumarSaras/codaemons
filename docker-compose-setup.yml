@@ -79,13 +79,14 @@ services:
   cddb:
     image: postgres:latest
     volumes:
+      - ./codaemons_db_dump.sql:/docker-entrypoint-initdb.d/codaemons_db_dump.sql
       - cd-postgresql-volume:/var/lib/postgresql/data/
     environment:
       - POSTGRES_PASSWORD=system
     depends_on:
       - db
       - redis
-
+      
 volumes:
   cd-postgresql-volume:
   cd-j0-postgresql-volume:

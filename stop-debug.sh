@@ -3,12 +3,12 @@
 #  Windows users run the script only in power shell
 #
 
-#Stopping all containers of our application
-echo "Stopping all containers of CoDaemons"
+#Cleaning up contnainers and volumes
+echo "Cleaning up contnainers and volumes"
 docker-compose -f docker-compose-debug.yml stop
 
 sleep 5
 
-#Cleaning up
-echo "Cleaning up!"
+#Cleaning up temp files
+echo "Cleaning up temp files!"
 rm -rf srv

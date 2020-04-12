@@ -3,9 +3,9 @@
 #  Windows users run the script only in power shell
 #
 
-#Cleaning up contnainers
-echo "Cleaning up contnainers"
-docker-compose -f docker-compose-dev.yml stop
+#Cleaning up contnainers and volumes
+echo "Cleaning up contnainers and volumes"
+docker-compose -f docker-compose-setup.yml down -v
 
 sleep 5
 
