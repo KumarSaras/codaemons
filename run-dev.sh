@@ -15,6 +15,11 @@ then
 	cd ..
 fi
 
+#Stop and remove db container
+echo "Stopping and removing DB container to handle mount point issue."
+docker stop codaemons_cddb_1
+docker rm codaemons_cddb_1
+
 #Run the db and redis containers for judge0
 echo "Starting all containers!"
 docker-compose -f docker-compose-dev.yml up -d db redis
