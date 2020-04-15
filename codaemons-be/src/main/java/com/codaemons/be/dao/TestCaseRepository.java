@@ -14,6 +14,6 @@ public interface TestCaseRepository extends CrudRepository<TestCase, Integer> {
 	@Query("select tc from TestCase tc where tc.testCaseDefaultFlag=true")
 	public TestCase getDefaultTestCase();
 	
-	@Query("selection tc from TestCase tc where tc.questionID=?1")
+	@Query("select tc from TestCase tc where tc.questionID=?1")
 	public List<TestCase> getTestCasesByQuestionID(int questionID);
 }
