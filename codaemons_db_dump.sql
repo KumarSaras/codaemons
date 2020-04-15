@@ -111,13 +111,13 @@ ALTER TABLE dev.languages OWNER TO postgres;
 --
 
 CREATE TABLE dev.questions (
-    question_id integer NOT NULL,
+    question_id serial,
     supported_language_id integer,
     question_type text,
     question_category text,
     difficulty_level text,
     question_description text NOT NULL,
-    question_active_flag "char" NOT NULL,
+    question_active_flag boolean NOT NULL,
     updated_date timestamp without time zone
 );
 
@@ -145,14 +145,15 @@ ALTER TABLE dev.roles OWNER TO postgres;
 --
 
 CREATE TABLE dev.test_cases (
-    test_case_id integer NOT NULL,
+    test_case_id serial,
     question_id integer NOT NULL,
     contest_id integer,
     test_case_input text NOT NULL,
     test_case_output text NOT NULL,
-    max_time_allowed text NOT NULL,
-    max_memory_allowed text NOT NULL,
-    test_case_active_flag "char" NOT NULL,
+    max_time_allowed double precision NOT NULL,
+    max_memory_allowed double precision NOT NULL,
+    test_case_active_flag boolean NOT NULL,
+    test_case_default_flag boolean NOT NULL,
     updated_date timestamp without time zone NOT NULL
 );
 
@@ -223,6 +224,7 @@ CREATE TABLE dev.user_submissions (
     test_case_exec_time integer,
     test_case_exec_memory text,
     submission_time_taken integer NOT NULL,
+    source_code text NOT NULL,
     updated_date timestamp without time zone
 );
 
@@ -274,6 +276,8 @@ ALTER TABLE dev.users OWNER TO postgres;
 INSERT INTO dev.languages (language_id, language_name, updated_date) VALUES (1, 'Java', '2020-04-10 19:10:25');
 INSERT INTO dev.languages (language_id, language_name, updated_date) VALUES (2, 'Python', '2016-06-22 19:10:25');
 INSERT INTO dev.languages (language_id, language_name, updated_date) VALUES (3, 'Perl', '2020-04-10 19:10:25');
+INSERT INTO dev.questions (supported_language_id, question_type, question_category, difficulty_level, question_description, question_active_flag, updated_date) VALUES (1, 'Test type', 'Test category', 'Easy', 'Print Hello World.', TRUE, '2020-04-10 19:10:25');
+
 
 
 --

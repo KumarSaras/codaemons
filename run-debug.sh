@@ -30,5 +30,9 @@ sleep 10
 #Run other containers
 docker-compose -f docker-compose-debug.yml up --build -d
 
+#Restarting nginx
+echo "Restarting Nginx"
+docker restart codaemons_nginx_1
+
 #Sleep 3s. Wait for everuthing to start
 sleep 10
