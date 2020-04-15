@@ -76,7 +76,7 @@ ALTER TABLE dev.contest_questions OWNER TO postgres;
 --
 
 CREATE TABLE dev.contests (
-    contest_id integer NOT NULL,
+    contest_id serial NOT NULL,
     contest_name text NOT NULL,
     contest_type text,
     contest_description text,
@@ -97,7 +97,7 @@ ALTER TABLE dev.contests OWNER TO postgres;
 --
 
 CREATE TABLE dev.languages (
-    language_id integer NOT NULL,
+    language_id serial NOT NULL,
     language_name text NOT NULL,
     updated_date timestamp without time zone
 );
@@ -131,7 +131,7 @@ ALTER TABLE dev.questions OWNER TO postgres;
 
 CREATE TABLE dev.roles (
     role_name text NOT NULL,
-    role_id integer NOT NULL,
+    role_id serial NOT NULL,
     role_active_flag "char" NOT NULL,
     updated_date timestamp without time zone NOT NULL
 );
@@ -166,15 +166,15 @@ ALTER TABLE dev.test_cases OWNER TO postgres;
 --
 
 CREATE TABLE dev.user_address (
-    user_address_id integer NOT NULL,
-    address_line_1 text NOT NULL,
+    user_address_id serial NOT NULL,
+    address_line_1 text,
     address_line_2 text,
-    city text NOT NULL,
-    state text NOT NULL,
-    country text NOT NULL,
-    zipcode integer NOT NULL,
+    city text,
+    state text,
+    country text,
+    zipcode integer,
     email_id text NOT NULL,
-    contact_number integer NOT NULL,
+    contact_number integer,
     updated_date timestamp without time zone
 );
 
@@ -217,7 +217,7 @@ ALTER TABLE dev.user_roles OWNER TO postgres;
 --
 
 CREATE TABLE dev.user_submissions (
-    submission_id integer NOT NULL,
+    submission_id serial NOT NULL,
     submission_language_id integer NOT NULL,
     test_case_id integer,
     test_case_result text,
@@ -237,7 +237,7 @@ ALTER TABLE dev.user_submissions OWNER TO postgres;
 --
 
 CREATE TABLE dev.users (
-    user_id integer NOT NULL,
+    user_id serial NOT NULL,
     user_first_name text NOT NULL,
     user_last_name text,
     username text NOT NULL,
