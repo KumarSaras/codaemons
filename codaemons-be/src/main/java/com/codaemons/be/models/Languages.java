@@ -14,10 +14,10 @@ import lombok.Data;
 @Entity
 @Table(name = "languages")
 @Data
-public class Lanugages {
+public class Languages {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "language_id")
 	private int languageID;
 	
