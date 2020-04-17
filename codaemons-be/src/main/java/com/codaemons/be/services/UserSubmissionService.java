@@ -1,7 +1,7 @@
 package com.codaemons.be.services;
 
+import com.codaemons.be.dao.UserSubmissionRepository;
 import com.codaemons.be.models.submission.UserSubmission;
-import com.codaemons.be.repository.UserSubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
