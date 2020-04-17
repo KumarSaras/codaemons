@@ -6,11 +6,13 @@ import com.codaemons.be.models.TestCase;
 
 public interface TestCaseService {
 
-	public void save(TestCase testCase);
+	public void saveAll(List<TestCase> testCases);
 	
 	public void deleteById(int id);
 	
-	public TestCase getDefaultTestCase();
+	public void deleteAll(List<TestCase> testCases);
+	
+	public TestCase getDefaultTestCase(int questionID);
 	
 	public List<TestCase> getTestCasesByQuestionID(int questionID);
 }

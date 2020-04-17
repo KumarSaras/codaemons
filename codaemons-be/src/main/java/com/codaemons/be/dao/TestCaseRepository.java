@@ -11,8 +11,8 @@ import com.codaemons.be.models.TestCase;
 @Repository
 public interface TestCaseRepository extends CrudRepository<TestCase, Integer> {
 	
-	@Query("select tc from TestCase tc where tc.testCaseDefaultFlag=true")
-	public TestCase getDefaultTestCase();
+	@Query("select tc from TestCase tc where tc.testCaseDefaultFlag=true and tc.questionID=?1")
+	public TestCase getDefaultTestCase(int questionID);
 	
 	@Query("select tc from TestCase tc where tc.questionID=?1")
 	public List<TestCase> getTestCasesByQuestionID(int questionID);
