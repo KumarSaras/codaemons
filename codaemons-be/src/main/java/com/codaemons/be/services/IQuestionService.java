@@ -6,7 +6,11 @@ import com.codaemons.be.models.Questions;
 
 public interface IQuestionService {
 
+	void saveQuestion(Questions question);
+
 	List<Questions> getAllQuestions();
 	
-	void saveQuestion(Questions question);
+	Questions getQuestion(int questionId);
+	
+	void deleteQuestion(int questionId);
 }
