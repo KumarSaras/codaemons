@@ -1,6 +1,6 @@
 package com.codaemons.be.models;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +28,6 @@ public class UserRoles {
 	private int userID;
 	
 	@Column(name = "updated_date")
-	private Timestamp updatedDate;
+	private LocalDateTime updatedDate;
 
 }

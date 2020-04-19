@@ -1,7 +1,7 @@
 package com.codaemons.be.services.impl;
 
-import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,55 +18,123 @@ import com.codaemons.be.models.Users;
 public class UserServiceImpl {
 
 	@Autowired
-	private UsersRepository usersDAO;
-	
-	@Autowired
-	private UserAddressRepository userAddressDAO;
+	private UsersRepository usersRespository;
 
 	@Autowired
-	private UserRolesRepository userRolesDAO;
-	
+	private UserAddressRepository userAddressRespository;
+
+	@Autowired
+	private UserRolesRepository userRolesRespository;
+
 	public boolean registerUser(RegistrationRequest registrationRequest) {
-		
-		UserAddress userAddress = new UserAddress();
-		//userAddress.setAddressLine1(registrationRequest.getAddressLine1());
-		//userAddress.setAddressLine2(registrationRequest.getAddressLine2());
-		//userAddress.setCity(registrationRequest.getCity());
-		//userAddress.setCountry(registrationRequest.getCountry());
-		//userAddress.setState(registrationRequest.getState());
-		//userAddress.setZipcode(registrationRequest.getZipcode());
-		userAddress.setEmailID(registrationRequest.getEmailID());
-		userAddress.setContactNumber(registrationRequest.getContactNumber());
-		userAddress.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-		userAddressDAO.save(userAddress);
-		
-		UserAddress userAddress1 = userAddressDAO.findByEmailID(userAddress.getEmailID());
-		
-		Users users = new Users();
-		users.setUserFirstName(registrationRequest.getUserFirstName());
-		users.setUserLastName(registrationRequest.getUserLastName());
-		users.setUsername(registrationRequest.getUserName());
-		users.setPassword(registrationRequest.getPassword());
-		users.setUserAddressID(userAddress1.getUserAddressID());
-		users.setUserActiveFlag('Y');
-		users.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-		usersDAO.save(users);
-		
-		Users user1 = usersDAO.findByUsername(users.getUsername());
-		
-		UserRoles userRoles = new UserRoles();
-		userRoles.setRoleID(2);
-		userRoles.setUserID(user1.getUserID());
-		userRoles.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-		userRolesDAO.save(userRoles);
-		
+		try {
+			insertUserAddress(registrationRequest.getEmailID());
+			UserAddress insertedAddressRecord = userAddressRespository.findByEmailID(registrationRequest.getEmailID());
+			insertUser(registrationRequest, insertedAddressRecord.getUserAddressID());
+			Users insertedUserRecord = usersRespository.findByUsername(registrationRequest.getUsername());
+			insertUserRole(insertedUserRecord.getUserID());
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean isUsernameAvailable(String username) {
+		Users user = usersRespository.findByUsername(username);
+		if(user != null) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean isEmailAvailable(String emailID) {
+		UserAddress userAddress = userAddressRespository.findByEmailID(emailID);
+		if(userAddress != null) {
+			return false;
+		}
 		return true;
 	}
 
-	public List<String> getUsernameList() {
-		List<String> usernameList = usersDAO.findAllUsernames();
-		return usernameList;
+	public Users getUserDetails(String username, String password) {
+		try {
+			Users user = usersRespository.getUserInfo(username, Base64.getEncoder().encodeToString(password.getBytes()));
+			return user;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
-	
+
+
+	//Helper Methods
+	private boolean insertUserAddress(String emailID) {
+
+		try {
+			UserAddress userAddress = new UserAddress();
+			userAddress.setEmailID(emailID);
+			userAddress.setUpdatedDate(LocalDateTime.now());
+			userAddressRespository.save(userAddress);
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private boolean insertUser(RegistrationRequest registrationRequest, int userAddressID) {
+		try {
+			Users users = new Users();
+			users.setUserFirstName(registrationRequest.getUserFirstName());
+			users.setUserLastName(registrationRequest.getUserLastName());
+			users.setUsername(registrationRequest.getUsername());
+			users.setPassword(Base64.getEncoder().encodeToString(registrationRequest.getPassword().getBytes()));
+			users.setUserAddressID(userAddressID);
+			users.setUserActiveFlag('Y');
+			users.setUpdatedDate(LocalDateTime.now());
+			usersRespository.save(users);
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			removeFromUserAddress(userAddressID);
+			return false;
+		}
+	}
+
+	private boolean insertUserRole(int userID) {
+		try {
+			UserRoles userRoles = new UserRoles();
+			userRoles.setRoleID(1);
+			userRoles.setUserID(userID);
+			userRoles.setUpdatedDate(LocalDateTime.now());
+			userRolesRespository.save(userRoles);
+			return true;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			removeFromUserAddress(getUserAddressIDFromUser(userID));
+			removeFromUsers(userID);
+			return false;
+		}
+		
+	}
+
+	private int getUserAddressIDFromUser(int userID) {
+		Users user = usersRespository.findById(userID);
+		return user.getUserAddressID();
+	}
+
+	private void removeFromUserAddress(Integer userAddressID) {
+		userAddressRespository.deleteById(userAddressID);
+	}
+
+	private void removeFromUsers(int userID) {
+		usersRespository.deleteById(userID);
+
+	}
+
 }

@@ -1,6 +1,6 @@
 package com.codaemons.be.models;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -30,6 +32,7 @@ public class Users {
 	@Column(name = "username")
 	private String username;
 	
+	@JsonIgnore
 	@Column(name = "password")
 	private String password;
 	
@@ -43,6 +46,6 @@ public class Users {
 	private char userActiveFlag;
 	
 	@Column(name = "updated_date")
-	private Timestamp updatedDate;
+	private LocalDateTime updatedDate;
 	
 }
