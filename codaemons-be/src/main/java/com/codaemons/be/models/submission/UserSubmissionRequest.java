@@ -1,41 +1,36 @@
 package com.codaemons.be.models.submission;
 
 public class UserSubmissionRequest {
-    private String userId;
-    private String contestId;
-    private String questionId;
+    private int userId;
+    private int contestId;
+    private int questionId;
     private String sourceCode;
     private int languageId;
+    private String expectedOutput;
+    private String stdin;
 
-    public UserSubmissionRequest(String userId, String contestId, String questionId, String sourceCode, int languageId) {
-        this.userId = userId;
-        this.contestId = contestId;
-        this.questionId = questionId;
-        this.sourceCode = sourceCode;
-        this.languageId = languageId;
-    }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public String getContestId() {
+    public int getContestId() {
         return contestId;
     }
 
-    public void setContestId(String contestId) {
+    public void setContestId(int contestId) {
         this.contestId = contestId;
     }
 
-    public String getQuestionId() {
+    public int getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(String questionId) {
+    public void setQuestionId(int questionId) {
         this.questionId = questionId;
     }
 
@@ -53,5 +48,21 @@ public class UserSubmissionRequest {
 
     public void setLanguageId(int languageId) {
         this.languageId = languageId;
+    }
+
+    public String getExpectedOutput() {
+        return expectedOutput;
+    }
+
+    public void setExpectedOutput(String expectedOutput) {
+        this.expectedOutput = expectedOutput;
+    }
+
+    public String getStdin() {
+        return stdin;
+    }
+
+    public void setStdin(String stdin) {
+        this.stdin = stdin;
     }
 }

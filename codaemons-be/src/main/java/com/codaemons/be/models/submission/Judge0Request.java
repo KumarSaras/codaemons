@@ -4,11 +4,25 @@ public class Judge0Request {
     private String source_code;
     private int language_id;
     private String stdin;
+    private String expected_output;
 
-    public Judge0Request(String source_code, int language_id, String stdin) {
+    public Judge0Request() {
+    }
+
+    public Judge0Request(String source_code, int language_id, String stdin, String expected_output) {
         this.source_code = source_code;
         this.language_id = language_id;
         this.stdin = stdin;
+        this.expected_output = expected_output;
+    }
+
+
+    public String getExpected_output() {
+        return expected_output;
+    }
+
+    public void setExpected_output(String expected_output) {
+        this.expected_output = expected_output;
     }
 
     public String getSource_code() {

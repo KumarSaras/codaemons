@@ -1,86 +1,112 @@
 package com.codaemons.be.models.submission;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity(name = "user_submission")
+@Entity
+@Table(name = "user_submission")
 public class UserSubmission {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long submission_id;
+    @Column(name = "submission_id")
+    private int submissionId;
 
-    private int submission_language_id;
-    private Long test_case_id;
-    private String test_case_result;
-    private int test_case_exec_time;
-    private String test_case_exec_memory;
-    private int submission_time_taken;
-    private String updated_date;
+    @Column(name = "submission_language_id")
+    private int submissionLanguageId;
 
-    public Long getSubmission_id() {
-        return submission_id;
+    @Column(name = "test_case_id")
+    private Long testCaseId;
+
+    @Column(name = "test_case_result" )
+    private String testCaseResult;
+
+    @Column(name = "test_case_exec_time")
+    private int testCaseExecTime;
+
+    @Column(name = "test_case_exec_memory")
+    private String testCaseExecMemory;
+
+    @Column(name = "submission_time_taken")
+    private int submissionTimeTaken;
+
+    @Column(name = "source_code")
+    private String sourceCode;
+
+    @Column(name = "updated_date")
+    private String updatedDate;
+
+    public UserSubmission(){
+
     }
 
-    public void setSubmission_id(Long submission_id) {
-        this.submission_id = submission_id;
+    public int getSubmissionId() {
+        return submissionId;
     }
 
-    public int getSubmission_language_id() {
-        return submission_language_id;
+    public void setSubmissionId(int submissionId) {
+        this.submissionId = submissionId;
     }
 
-    public void setSubmission_language_id(int submission_language_id) {
-        this.submission_language_id = submission_language_id;
+    public int getSubmissionLanguageId() {
+        return submissionLanguageId;
     }
 
-    public Long getTest_case_id() {
-        return test_case_id;
+    public void setSubmissionLanguageId(int submissionLanguageId) {
+        this.submissionLanguageId = submissionLanguageId;
     }
 
-    public void setTest_case_id(Long test_case_id) {
-        this.test_case_id = test_case_id;
+    public Long getTestCaseId() {
+        return testCaseId;
     }
 
-    public String getTest_case_result() {
-        return test_case_result;
+    public void setTestCaseId(Long testCaseId) {
+        this.testCaseId = testCaseId;
     }
 
-    public void setTest_case_result(String test_case_result) {
-        this.test_case_result = test_case_result;
+    public String getTestCaseResult() {
+        return testCaseResult;
     }
 
-    public int getTest_case_exec_time() {
-        return test_case_exec_time;
+    public void setTestCaseResult(String testCaseResult) {
+        this.testCaseResult = testCaseResult;
     }
 
-    public void setTest_case_exec_time(int test_case_exec_time) {
-        this.test_case_exec_time = test_case_exec_time;
+    public int getTestCaseExecTime() {
+        return testCaseExecTime;
     }
 
-    public String getTest_case_exec_memory() {
-        return test_case_exec_memory;
+    public void setTestCaseExecTime(int testCaseExecTime) {
+        this.testCaseExecTime = testCaseExecTime;
     }
 
-    public void setTest_case_exec_memory(String test_case_exec_memory) {
-        this.test_case_exec_memory = test_case_exec_memory;
+    public String getTestCaseExecMemory() {
+        return testCaseExecMemory;
     }
 
-    public int getSubmission_time_taken() {
-        return submission_time_taken;
+    public void setTestCaseExecMemory(String testCaseExecMemory) {
+        this.testCaseExecMemory = testCaseExecMemory;
     }
 
-    public void setSubmission_time_taken(int submission_time_taken) {
-        this.submission_time_taken = submission_time_taken;
+    public int getSubmissionTimeTaken() {
+        return submissionTimeTaken;
     }
 
-    public String getUpdated_date() {
-        return updated_date;
+    public void setSubmissionTimeTaken(int submissionTimeTaken) {
+        this.submissionTimeTaken = submissionTimeTaken;
     }
 
-    public void setUpdated_date(String updated_date) {
-        this.updated_date = updated_date;
+    public String getSourceCode() {
+        return sourceCode;
+    }
+
+    public void setSourceCode(String sourceCode) {
+        this.sourceCode = sourceCode;
+    }
+
+    public String getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        this.updatedDate = updatedDate;
     }
 }

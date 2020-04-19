@@ -79,8 +79,8 @@ public class Judge0Response {
 }
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Status{
-    int id;
-    String description;
+    private int id;
+    private String description;
 
 //    public Status(int id, String description) {
 //        this.id = id;
