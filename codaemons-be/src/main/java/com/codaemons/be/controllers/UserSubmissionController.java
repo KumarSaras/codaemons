@@ -18,7 +18,7 @@ import java.util.List;
 public class UserSubmissionController {
 
     @Autowired
-    private SubmissionServiceImpl submissionService;
+    private SubmissionService submissionService;
 
 
     @PostMapping

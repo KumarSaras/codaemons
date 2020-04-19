@@ -1,5 +1,6 @@
 package com.codaemons.be.models.submission;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -7,6 +8,10 @@ import javax.persistence.*;
 public class UserContest {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "submission_id")
+    private int submissionId;
+
     @Column(name = "user_id")
     private int userId;
 
@@ -16,9 +21,6 @@ public class UserContest {
     @Column(name = "question_id")
     private int questionId;
 
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "submission_id")
-    private int submissionId;
 
     @Column(name = "submission_status")
     private String submissionStatus;
@@ -55,9 +57,6 @@ public class UserContest {
         return submissionId;
     }
 
-    public void setSubmissionId(int submissionId) {
-        this.submissionId = submissionId;
-    }
 
     public String getSubmissionStatus() {
         return submissionStatus;

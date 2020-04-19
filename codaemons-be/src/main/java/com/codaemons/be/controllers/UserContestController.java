@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/v1/userContest")
 public class UserContestController {
     @Autowired
-    private UserContestServiceImpl userContestService;
+    private UserContestService userContestService;
 
     @GetMapping
     public List<UserContest> list(){

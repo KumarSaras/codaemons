@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -57,6 +58,7 @@ public class SubmissionServiceImpl implements SubmissionService {
         userContest.setContestId(userSubmissionRequest.getContestId());
        // if (userSubmissionRequest.getQuestionId() != 0) {
         userContest.setQuestionId(userSubmissionRequest.getQuestionId());
+        userContest.setSubmissionStatus(judge0Response.getStatusDescription());
        // }else{
            // userContest.setQuestionId(0);
       //  }
@@ -66,6 +68,10 @@ public class SubmissionServiceImpl implements SubmissionService {
         //User submission
         UserSubmission userSubmission = new UserSubmission();
         userSubmission.setSubmissionId(userContestReturn.getSubmissionId());
+        userSubmission.setSubmissionLanguageId(userSubmissionRequest.getLanguageId());
+        userSubmission.setSubmissionTimeTaken(0); //fix later
+        userSubmission.setSourceCode(userSubmissionRequest.getSourceCode());//(userSubmissionRequest.getSourceCode());
+       // userSubmission.setUpdatedDate(LocalDateTime.now());
 //        userSubmission.setSubmissionStatus(judge0Response.getStatus().getDescription());
 
         userSubmissionRepository.saveAndFlush(userSubmission);

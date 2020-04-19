@@ -1,9 +1,10 @@
 package com.codaemons.be.models.submission;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_submission")
+@Table(name = "user_submissions")
 public class UserSubmission {
 
     @Id
@@ -32,7 +33,8 @@ public class UserSubmission {
     private String sourceCode;
 
     @Column(name = "updated_date")
-    private String updatedDate;
+    private LocalDateTime updatedDate;
+
 
     public UserSubmission(){
 
@@ -102,11 +104,11 @@ public class UserSubmission {
         this.sourceCode = sourceCode;
     }
 
-    public String getUpdatedDate() {
+    public LocalDateTime getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(String updatedDate) {
+    public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
     }
 }

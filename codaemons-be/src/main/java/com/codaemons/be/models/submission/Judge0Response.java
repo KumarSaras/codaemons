@@ -76,6 +76,10 @@ public class Judge0Response {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public String getStatusDescription(){
+        return status.getDescription();
+    }
 }
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Status{
@@ -87,7 +91,6 @@ class Status{
 //        this.description = description;
 //    }
     public Status(){
-
     }
 
     public int getId() {
