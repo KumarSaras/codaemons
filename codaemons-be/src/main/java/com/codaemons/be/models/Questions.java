@@ -1,13 +1,17 @@
 package com.codaemons.be.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * Model class for {@link Questions} entity.
@@ -17,33 +21,35 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "questions")
+@EntityListeners(AuditingEntityListener.class)
 public class Questions {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "question_id")
-	private int questionID; // TODO: should be UUID or int?
+	private int questionID;
 	
 	@Column(name = "supported_language_id")
-	private int supportedLanguageID; // TODO: should be int or comma separated lang code?
+	private String supportedLanguageID;
 	
 	@Column(name = "question_type")
-	private String questionType; // TODO: what exactly does this field do?
+	private String questionType;
 	
 	@Column(name = "question_category")
-	private String questionCategory; // TODO: what exactly does this field do?
+	private String questionCategory; 
 	
 	@Column(name = "difficulty_level")
 	private String difficultyLevel;
 	
 	@Column(name = "question_description")
-	private String questionDescription; // TODO: type should be string or binary?
+	private String questionDescription;
 	
 	@Column(name = "question_active_flag")
-	private boolean questionActiveFlag; // TODO: how will this flag be used?
+	private boolean questionActiveFlag;
 	
+	@LastModifiedDate
 	@Column(name = "updated_date")
-	private Date updatedDate; // TODO: what about lastModifiedAt field name?
+	private Timestamp lastModifiedDate;
 
 	public int getQuestionID() {
 		return questionID;
@@ -53,11 +59,11 @@ public class Questions {
 		this.questionID = questionID;
 	}
 
-	public int getSupportedLanguageID() {
+	public String getSupportedLanguageID() {
 		return supportedLanguageID;
 	}
 
-	public void setSupportedLanguageID(int supportedLanguageID) {
+	public void setSupportedLanguageID(String supportedLanguageID) {
 		this.supportedLanguageID = supportedLanguageID;
 	}
 
@@ -101,11 +107,11 @@ public class Questions {
 		this.questionActiveFlag = questionActiveFlag;
 	}
 
-	public Date getUpdatedDate() {
-		return updatedDate;
+	public Timestamp getLastModifiedDate() {
+		return lastModifiedDate;
 	}
 
-	public void setUpdatedDate(Date updatedDate) {
-		this.updatedDate = updatedDate;
-	}
+	public void setLastModifiedDate(Timestamp lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	} 
 }
