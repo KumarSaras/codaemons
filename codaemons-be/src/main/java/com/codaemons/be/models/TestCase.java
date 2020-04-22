@@ -4,13 +4,18 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
 @Table(name="test_cases")
+@EntityListeners(AuditingEntityListener.class)
 public class TestCase {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -44,6 +49,7 @@ public class TestCase {
 	@Column(name="test_case_default_flag")
 	private boolean testCaseDefaultFlag;
 	
+	@LastModifiedDate
 	@Column(name="updated_date")
 	private LocalDateTime updatedDate;
 
