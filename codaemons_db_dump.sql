@@ -83,7 +83,7 @@ CREATE TABLE dev.contests (
     contest_duration integer NOT NULL,
     contest_start_date timestamp without time zone NOT NULL,
     contest_end_date timestamp without time zone NOT NULL,
-    contest_active_flag "char" NOT NULL,
+    contest_active_flag boolean NOT NULL,
     updated_date timestamp without time zone,
     supported_language_id integer
 );
@@ -132,7 +132,7 @@ ALTER TABLE dev.questions OWNER TO postgres;
 CREATE TABLE dev.roles (
     role_name text NOT NULL,
     role_id serial NOT NULL,
-    role_active_flag "char" NOT NULL,
+    role_active_flag boolean NOT NULL,
     updated_date timestamp without time zone NOT NULL
 );
 
@@ -203,6 +203,7 @@ ALTER TABLE dev.user_contests OWNER TO postgres;
 --
 
 CREATE TABLE dev.user_roles (
+	user_role_id integer NOT NULL,
     user_id integer NOT NULL,
     role_id bigint NOT NULL,
     updated_date timestamp without time zone
@@ -244,7 +245,7 @@ CREATE TABLE dev.users (
     password text NOT NULL,
     user_address_id integer,
     user_org_id integer,
-    user_active_flag "char" NOT NULL,
+    user_active_flag boolean NOT NULL,
     updated_date timestamp without time zone
 );
 
@@ -276,7 +277,6 @@ ALTER TABLE dev.users OWNER TO postgres;
 INSERT INTO dev.languages (language_id, language_name, updated_date) VALUES (1, 'Java', '2020-04-10 19:10:25');
 INSERT INTO dev.languages (language_id, language_name, updated_date) VALUES (2, 'Python', '2016-06-22 19:10:25');
 INSERT INTO dev.languages (language_id, language_name, updated_date) VALUES (3, 'Perl', '2020-04-10 19:10:25');
-INSERT INTO dev.questions (supported_language_id, question_type, question_category, difficulty_level, question_description, question_active_flag, updated_date) VALUES (1, 'Test type', 'Test category', 'Easy', 'Print Hello World.', TRUE, '2020-04-10 19:10:25');
 
 
 
@@ -285,7 +285,7 @@ INSERT INTO dev.questions (supported_language_id, question_type, question_catego
 -- Dependencies: 205
 -- Data for Name: questions; Type: TABLE DATA; Schema: dev; Owner: postgres
 --
-
+INSERT INTO dev.questions (supported_language_id, question_type, question_category, difficulty_level, question_description, question_active_flag, updated_date) VALUES (1, 'Test type', 'Test category', 'Easy', 'Print Hello World.', TRUE, '2020-04-10 19:10:25');
 
 
 --
@@ -293,7 +293,8 @@ INSERT INTO dev.questions (supported_language_id, question_type, question_catego
 -- Dependencies: 206
 -- Data for Name: roles; Type: TABLE DATA; Schema: dev; Owner: postgres
 --
-
+INSERT INTO dev.roles (role_id, role_name, role_active_flag, updated_date) VALUES (1, 'USER', TRUE, '2020-04-10 19:10:25');
+INSERT INTO dev.roles (role_id, role_name, role_active_flag, updated_date) VALUES (2, 'ADMIN', TRUE, '2020-04-10 19:10:26');
 
 
 --
@@ -415,6 +416,9 @@ ALTER TABLE ONLY dev.user_address
 ALTER TABLE ONLY dev.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
+
+ALTER TABLE ONLY dev.user_roles
+    ADD CONSTRAINT user_roles_pkey PRIMARY KEY (user_role_id);
 
 --
 -- TOC entry 2746 (class 1259 OID 16670)
