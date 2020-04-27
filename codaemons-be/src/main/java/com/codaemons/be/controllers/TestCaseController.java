@@ -15,7 +15,7 @@ import com.codaemons.be.models.TestCase;
 import com.codaemons.be.services.TestCaseService;
 
 @RestController
-@RequestMapping(path="/api/v1/testcases", consumes="application/json", produces="application/json")
+@RequestMapping(path="/testcases", consumes="application/json", produces="application/json")
 public class TestCaseController {
 	
 	private TestCaseService testCaseService;

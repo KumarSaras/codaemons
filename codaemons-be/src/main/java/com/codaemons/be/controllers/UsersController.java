@@ -17,7 +17,7 @@ import com.codaemons.be.models.Users;
 import com.codaemons.be.services.impl.UserServiceImpl;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/user")
 public class UsersController {
 
 	@Autowired
