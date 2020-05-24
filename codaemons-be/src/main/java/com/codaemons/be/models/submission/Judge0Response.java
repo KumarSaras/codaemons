@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Judge0Response {
     private String stdout;
-    private String time;
-    private Long memory;
+    private double time;
+    private double memory;
     private String stderr;
     private String token;
     private String compile_output;
@@ -21,19 +21,19 @@ public class Judge0Response {
         this.stdout = stdout;
     }
 
-    public String getTime() {
+    public double getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(double time) {
         this.time = time;
     }
 
-    public Long getMemory() {
+    public double getMemory() {
         return memory;
     }
 
-    public void setMemory(Long memory) {
+    public void setMemory(double memory) {
         this.memory = memory;
     }
 

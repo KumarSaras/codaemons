@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/v1/userSubmission")
+@RequestMapping("/userSubmission")
 public class UserSubmissionController {
 
     @Autowired
@@ -29,8 +29,8 @@ public class UserSubmissionController {
         return submissionService.save(userSubmissionRequest);
     }
 
-    @PostMapping
-    @RequestMapping("/test")
+    @PostMapping("/test")
+//    @RequestMapping("/test")
     public String createSubmissionSimulation(@RequestBody final UserSubmissionRequest userSubmissionRequest){
         return submissionService.saveSimulation(userSubmissionRequest);
     }
@@ -41,7 +41,7 @@ public class UserSubmissionController {
     }
 
     @GetMapping("/{submissionID}")
-    public Optional<UserSubmission> findBySubmissionId(@PathVariable int submissionID ){
+    public List<UserSubmission> findBySubmissionId(@PathVariable int submissionID ){
         return submissionService.findBySubmissionID(submissionID);
     }
 }

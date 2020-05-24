@@ -1,20 +1,22 @@
 package com.codaemons.be.models.submission;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
-@Entity
+@Entity @IdClass(UserSubmissionKey.class)
 @Table(name = "user_submissions")
-public class UserSubmission {
+
+public class UserSubmission implements Serializable {
 
     @Id
     @Column(name = "submission_id")
     private int submissionId;
-
+    @Id
     @Column(name = "submission_language_id")
     private int submissionLanguageId;
-
+    @Id
     @Column(name = "test_case_id")
     private int testCaseId;
 
@@ -22,7 +24,7 @@ public class UserSubmission {
     private String testCaseResult;
 
     @Column(name = "test_case_exec_time")
-    private int testCaseExecTime;
+    private double testCaseExecTime;
 
     @Column(name = "test_case_exec_memory")
     private String testCaseExecMemory;
@@ -73,11 +75,11 @@ public class UserSubmission {
         this.testCaseResult = testCaseResult;
     }
 
-    public int getTestCaseExecTime() {
+    public double getTestCaseExecTime() {
         return testCaseExecTime;
     }
 
-    public void setTestCaseExecTime(int testCaseExecTime) {
+    public void setTestCaseExecTime(double testCaseExecTime) {
         this.testCaseExecTime = testCaseExecTime;
     }
 
@@ -116,3 +118,5 @@ public class UserSubmission {
         this.updatedDate = updatedDate;
     }
 }
+
+
