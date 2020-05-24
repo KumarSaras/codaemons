@@ -2,6 +2,7 @@ package com.codaemons.be.models.submission;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @Entity
 @Table(name = "user_submissions")
@@ -15,7 +16,7 @@ public class UserSubmission {
     private int submissionLanguageId;
 
     @Column(name = "test_case_id")
-    private Long testCaseId;
+    private int testCaseId;
 
     @Column(name = "test_case_result" )
     private String testCaseResult;
@@ -56,11 +57,11 @@ public class UserSubmission {
         this.submissionLanguageId = submissionLanguageId;
     }
 
-    public Long getTestCaseId() {
+    public int getTestCaseId() {
         return testCaseId;
     }
 
-    public void setTestCaseId(Long testCaseId) {
+    public void setTestCaseId(int testCaseId) {
         this.testCaseId = testCaseId;
     }
 
@@ -97,11 +98,14 @@ public class UserSubmission {
     }
 
     public String getSourceCode() {
-        return sourceCode;
+        //return this.sourceCode;
+        byte[] actualByte = Base64.getDecoder().decode(this.sourceCode);
+        return new String(actualByte);
     }
 
     public void setSourceCode(String sourceCode) {
-        this.sourceCode = sourceCode;
+
+        this.sourceCode = Base64.getEncoder().encodeToString(sourceCode.getBytes());
     }
 
     public LocalDateTime getUpdatedDate() {
