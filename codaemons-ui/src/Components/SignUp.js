@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +10,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import AppPaths from "../AppPaths";
+import { NavLink } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -24,46 +26,28 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export default function SignUp() {
-
   const classes = useStyles();
-
-  const [userDetails, setUserDetails] = useState({
-    firstName: "",
-    lastName: "",
-    emailId: "",
-    password: ""
-  });
-
-  const handleUserDetailsChange = (event, propertyName) => {
-    const newUserDetails = Object.assign(userDetails);
-    newUserDetails[propertyName] = event.target.value;
-    setUserDetails(newUserDetails);
-  };
-
-  const handleSubmit = () => {
-    // TODO: call backend API to register the user
-  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -87,7 +71,6 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={e => handleUserDetailsChange(e, "firstName")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -100,7 +83,6 @@ export default function SignUp() {
                 name="lastName"
                 autoComplete="lname"
                 autoFocus
-                onChange={e => handleUserDetailsChange(e, "lastName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -113,7 +95,6 @@ export default function SignUp() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                onChange={e => handleUserDetailsChange(e, "emailId")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -127,7 +108,6 @@ export default function SignUp() {
                 id="password"
                 autoComplete="current-password"
                 autoFocus
-                onChange={e => handleUserDetailsChange(e, "password")}
               />
             </Grid>
           </Grid>
@@ -137,15 +117,14 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
           >
             Sign Up
           </Button>
           <Grid container justify="center">
             <Grid item>
-              <Link to="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <NavLink to={AppPaths.LOGIN} variant="body2">
+                Already have an account? Login
+              </NavLink>
             </Grid>
           </Grid>
         </form>
