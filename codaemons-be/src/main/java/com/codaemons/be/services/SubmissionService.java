@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface SubmissionService {
 
     public List<UserSubmission> findAll();
-    public Optional<UserSubmission> findBySubmissionID(final int submissionID);
+    public List<UserSubmission> findBySubmissionID(final int submissionID);
     public String save(final UserSubmissionRequest userSubmissionRequest);
     public String saveSimulation(final UserSubmissionRequest userSubmissionRequest);
 }

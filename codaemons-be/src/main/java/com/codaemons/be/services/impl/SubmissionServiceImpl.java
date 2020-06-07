@@ -39,8 +39,8 @@ public class SubmissionServiceImpl implements SubmissionService {
         return userSubmissionRepository.findAll();
     }
 
-    public Optional<UserSubmission> findBySubmissionID(final int submissionID){
-        return userSubmissionRepository.findById(submissionID);
+    public List<UserSubmission> findBySubmissionID(final int submissionID){
+        return userSubmissionRepository.findBySubmissionId(submissionID);
     }
 
 
@@ -81,7 +81,9 @@ public class SubmissionServiceImpl implements SubmissionService {
             userSubmission.setSubmissionLanguageId(userSubmissionRequest.getLanguageId());
             userSubmission.setTestCaseId(testCase.getTestCaseID());
             userSubmission.setTestCaseResult(judge0Response.getStatusDescription());
-            userSubmission.setSubmissionTimeTaken(0); //fix later
+
+            userSubmission.setTestCaseExecTime(judge0Response.getTime());
+            userSubmission.setTestCaseExecMemory(judge0Response.getMemory()+" kilobyte");
             //converting base64 in setter
             userSubmission.setSourceCode(userSubmissionRequest.getSourceCode());//(userSubmissionRequest.getSourceCode());
             // userSubmission.setUpdatedDate(LocalDateTime.now());
