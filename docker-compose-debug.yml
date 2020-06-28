@@ -55,7 +55,7 @@ services:
     expose:
       - "8000"
     ports:
-      - "8081:8080"
+      - "8443:8443"
       - "8000:8000"
     command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000 -jar app.jar
     depends_on:
@@ -69,7 +69,7 @@ services:
   nginx:
     build: './codaemons-ui'
     ports:
-      - "8080:8080"
+      - "443:443"
     environment:
       - API_BACKEND_URI=http://cdapibackend
     depends_on:

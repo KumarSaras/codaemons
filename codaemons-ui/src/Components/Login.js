@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import AppPaths from "../AppPaths";
 
 function Copyright() {
@@ -48,10 +48,59 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+function processResponse(response) {
+  const statusCode = response.status;
+  const data = response.json();
+  return Promise.all([statusCode, data]).then(res => ({
+    statusCode: res[0],
+    data: res[1]
+  }));
+}
+
 export default function Login() {
   
   const classes = useStyles();
 
+  const [userDetails, setUserDetails] = useState({
+    userame: "",
+    password: ""
+  });
+
+  const [redirect, setRedirect] = useState(false);
+
+  const handleUserDetailsChange = (event, propertyName) => {
+    const newUserDetails = Object.assign(userDetails);
+    newUserDetails[propertyName] = event.target.value;
+    setUserDetails(newUserDetails);
+  };
+
+  const handleSubmit = () => {
+    // TODO: call backend API to register the user
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userDetails)
+    };
+    fetch('https://localhost:443/api/v1/authenticate', requestOptions)
+      .then(processResponse)
+      .then(res => {
+        console.log(res);
+        const { statusCode, data } = res;
+        console.log(data)
+        if(statusCode === 200){
+            localStorage.setItem("token", data.token);
+            setRedirect(true);
+          //window.alert("Login successful");
+        } else {
+          window.alert("Login failed");
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+  };
+  if (redirect) {
+    return <Redirect to='/contest'/>;
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -63,17 +112,17 @@ export default function Login() {
           Login
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
+        <TextField
+            autoComplete="username"
+            name="username"
             variant="outlined"
-            margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
             autoFocus
-          />
+            onChange={e => handleUserDetailsChange(e, "username")}
+              />
           <TextField
             variant="outlined"
             margin="normal"
@@ -84,6 +133,7 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={e => handleUserDetailsChange(e, "password")}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -94,6 +144,7 @@ export default function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Login
           </Button>

@@ -1,5 +1,6 @@
 export default {
     "HOME": "/",
     "SIGN_UP": "/signup",
-    "LOGIN": "/login"
+    "LOGIN": "/login",
+    "CONTEST": "/contest"
   }

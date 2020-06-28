@@ -53,7 +53,7 @@ services:
       - DB_URI=postgresql://cddb:5432/CodeDaemons
       - JUDGE0_API_BASE_URI=http://api:3000
     ports:
-      - "8081:8080"
+      - "8443:8443"
     depends_on:
       - cddb
       - db
@@ -65,7 +65,7 @@ services:
   nginx:
     build: './codaemons-ui'
     ports:
-      - "8080:8080"
+      - "443:443"
     environment:
       - API_BACKEND_URI=http://cdapibackend
     depends_on:

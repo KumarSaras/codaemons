@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/userSubmission")
+@RequestMapping("/api/v1/userSubmission")
 public class UserSubmissionController {
 
     @Autowired

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.codaemons.be.beans.RegistrationRequest;
@@ -59,7 +60,7 @@ public class UserServiceImpl {
 
 	public Users getUserDetails(String username, String password) {
 		try {
-			Users user = usersRespository.getUserInfo(username, Base64.getEncoder().encodeToString(password.getBytes()));
+			Users user = usersRespository.getUserInfo(username, new BCryptPasswordEncoder().encode(password));
 			return user;
 		}
 		catch(Exception e) {
@@ -91,7 +92,7 @@ public class UserServiceImpl {
 			users.setUserFirstName(registrationRequest.getUserFirstName());
 			users.setUserLastName(registrationRequest.getUserLastName());
 			users.setUsername(registrationRequest.getUsername());
-			users.setPassword(Base64.getEncoder().encodeToString(registrationRequest.getPassword().getBytes()));
+			users.setPassword(new BCryptPasswordEncoder().encode(registrationRequest.getPassword()));
 			users.setUserAddressID(userAddressID);
 			users.setUserActiveFlag('Y');
 			users.setUpdatedDate(LocalDateTime.now());
