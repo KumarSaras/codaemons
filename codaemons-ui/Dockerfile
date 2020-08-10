@@ -14,7 +14,9 @@ FROM nginx:latest
 COPY --from=react_build /app/build/ /srv/www/static/
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/codaemons-bundle.pem /etc/nginx/ssl/codaemons-bundle.pem
+COPY nginx/server.key /etc/nginx/ssl/server.key
 
 #fire up nginx
-EXPOSE 80
+EXPOSE 443
 CMD ["nginx","-g","daemon off;"]

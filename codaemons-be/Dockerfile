@@ -11,7 +11,7 @@ WORKDIR /opt/app
 # cp target/spring-boot-web.jar /opt/app/app.jar
 COPY ${JAR_FILE} app.jar
 
-EXPOSE 8080
+EXPOSE 8443
 
 # java -jar /opt/app/app.jar
 CMD ["java","-jar","app.jar"]

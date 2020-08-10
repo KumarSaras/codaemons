@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -46,8 +46,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function processResponse(response) {
+  const statusCode = response.status;
+  const data = response.json();
+  return Promise.all([statusCode, data]).then(res => ({
+    statusCode: res[0],
+    data: res[1]
+  }));
+}
+
 export default function SignUp() {
   const classes = useStyles();
+
+  const [userDetails, setUserDetails] = useState({
+    userFirstName: "",
+    userLastName: "",
+    emailID: "",
+    userame: "",
+    password: ""
+  });
+
+  const handleUserDetailsChange = (event, propertyName) => {
+    const newUserDetails = Object.assign(userDetails);
+    newUserDetails[propertyName] = event.target.value;
+    setUserDetails(newUserDetails);
+  };
+
+  const handleSubmit = () => {
+    // TODO: call backend API to register the user
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(userDetails)
+    };
+    fetch('https://localhost:443/api/v1/user/registration', requestOptions)
+      .then(res => res)
+      .then(res => {
+        console.log(res);
+        //const { statusCode, data } = res;
+        //console.log(data)
+        if(res.status === 200){
+          window.alert("User registration successful!");
+        } else {
+          window.alert("User registration failed!");
+        }
+      }).catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -71,6 +117,7 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={e => handleUserDetailsChange(e, "userFirstName")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,7 +129,7 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                autoFocus
+                onChange={e => handleUserDetailsChange(e, "userLastName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,8 +141,21 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
+                onChange={e => handleUserDetailsChange(e, "emailID")}
               />
+            </Grid>
+            <Grid item xs={12}>
+            <TextField
+              autoComplete="username"
+              name="username"
+              variant="outlined"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              autoFocus
+              onChange={e => handleUserDetailsChange(e, "username")}
+            />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -107,7 +167,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                autoFocus
+                onChange={e => handleUserDetailsChange(e, "password")}
               />
             </Grid>
           </Grid>
@@ -117,6 +177,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Sign Up
           </Button>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codaemons.be.beans.LoginRequest;
 import com.codaemons.be.beans.RegistrationRequest;
+import com.codaemons.be.exception.CodaemonsResourceException;
 import com.codaemons.be.models.Users;
 import com.codaemons.be.services.impl.UserServiceImpl;
 
@@ -36,7 +37,7 @@ public class UsersController {
 		if(userServiceImpl.isEmailAvailable(emailID)) {
 			return new ResponseEntity<String>("No registered user with this email", new HttpHeaders(), HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("A user with this email already exists!", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		throw new CodaemonsResourceException("A user with this email already exists!");
 	}
 	
 	@PostMapping("/registration")
@@ -45,7 +46,7 @@ public class UsersController {
 		if(status) {
 			return new ResponseEntity<String>("User registered successfully", new HttpHeaders(), HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("User registration failed", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		throw new CodaemonsResourceException("User not registered successfully");
 	}
 	
 	@PostMapping("/login")
@@ -54,7 +55,7 @@ public class UsersController {
 		if(user != null) {
 			return new ResponseEntity<Users>(user, new HttpHeaders(), HttpStatus.OK);
 		}
-		return new ResponseEntity<Users>(null, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+		throw new CodaemonsResourceException("User registration failed");
 	}
 
 }

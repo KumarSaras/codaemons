@@ -15,7 +15,7 @@ import com.codaemons.be.models.Questions;
 import com.codaemons.be.services.IQuestionService;
 
 @RestController
-@RequestMapping("/questions")
+@RequestMapping("/api/v1/questions")
 public class QuestionsController {
 
 	@Autowired
